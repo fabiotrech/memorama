@@ -1,0 +1,15 @@
+.card {
+    border: 1px solid #ccc;
+    background-color: #efefef;
+    font-size: 40px;
+    height: 100px;
+    width: 60px;
+    line-height: 100px;
+    text-transform: uppercase;
+    text-align: center;
+    border-radius: 4px;
+}
+
+    .card-hidden {
+        
+    }
