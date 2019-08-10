@@ -7,9 +7,14 @@
     line-height: 100px;
     text-transform: uppercase;
     text-align: center;
+    overflow: hidden;
     border-radius: 4px;
 }
 
+    .card-selected {
+        color: red;
+    }
+
     .card-hidden {
-        
+        text-indent: -9999px;
     }

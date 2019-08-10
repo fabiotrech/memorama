@@ -1,16 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './card.css'
 
-class Card extends Component {
-    render() {
-        let { value, visible }  = this.props.data;
+function Card(props) {
+    let { value, show }  = props.data;
 
-        return (
-            <div className={ visible ? "card" : "card card-hidden" } onClick={() => this.props.onClick()}>
-                {value}
-            </div>
-        )
-    }
+    return (
+        <div className={ show ? "card" : "card card-hidden" } onClick={() => props.onClick()}>
+            {value}
+        </div>
+    )
 }
 
 export default Card
