@@ -50,7 +50,7 @@ class App extends Component {
 	checkPoint() {
 		let { firstCard, secondCard } = this.state.selected
 		let isValid = this.validSelected()
-		
+
 		this.setState(state => {
 			state.canSelect = true
 
@@ -139,13 +139,19 @@ class App extends Component {
 
 	render() {
 		return (
-			<div>
-				<h1>Memorama</h1>
-				<p>
-					Puntos: Jugador 1 ({this.state.scores[0]}) - Jugador 2 ({this.state.scores[1]})
-				</p>
+			<div className="game-box">
+				<div className="score-box">
+					<p>
+						Jugador 1: {this.state.scores[0]}
+					</p>
+					<p>
+						Jugador 2: {this.state.scores[1]}
+					</p>
+				</div>
 
-				<p>Turno del jugador {this.state.currentPlayer + 1}</p>
+				<p className="player-turn">
+					Turno del jugador {this.state.currentPlayer + 1}
+				</p>
 
 				<div className="board">
 					{this.state.board.map((card, index) => 

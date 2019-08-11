@@ -1,5 +1,4 @@
 .card {
-    border: 1px solid #ccc;
     background-color: #efefef;
     cursor: pointer;
     font-size: 40px;
@@ -10,6 +9,7 @@
     text-align: center;
     overflow: hidden;
     text-indent: -9999px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .3);
     border-radius: 4px;
     user-select: none;
 }
