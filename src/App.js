@@ -26,29 +26,31 @@ class App extends Component {
 		let split = letters.split("")
 
 		return this.shuffleArray(split).map(s => {
-			return { value: s, show: false, visible: true}
+			return { value: s, show: false, enabled: true}
 		})
 	}
 
 	shuffleArray(a) {
-		var j, x, i;
+		let j, x, i
+
 		for (i = a.length - 1; i > 0; i--) {
-			j = Math.floor(Math.random() * (i + 1));
-			x = a[i];
-			a[i] = a[j];
-			a[j] = x;
+			j = Math.floor(Math.random() * (i + 1))
+			x = a[i]
+			a[i] = a[j]
+			a[j] = x
 		}
-		return a;
+
+		return a
 	}
 
 	validSelected() {
-		return this.state.selected.firstCard.value === this.state.selected.secondCard.value;
+		return this.state.selected.firstCard.value === this.state.selected.secondCard.value
 	}
 
 	checkPoint() {
 		let { firstCard, secondCard } = this.state.selected
 		let isValid = this.validSelected()
-
+		
 		this.setState(state => {
 			state.canSelect = true
 
@@ -66,7 +68,7 @@ class App extends Component {
 
 					if (isValid) {
 						// La carta queda fuera de juego
-						card.visible = false
+						card.enabled = false
 					} else {
 						// Oculto la carta para el siguiente player
 						card.show = false
@@ -79,7 +81,7 @@ class App extends Component {
 	}
 
 	checkEndGame() {
-		let hasCards = this.state.board.filter(card => card.visible).length
+		let hasCards = this.state.board.filter(card => card.enabled).length
 
 		if (hasCards === 0) {
 			let score1 = this.state.scores[0]
@@ -96,7 +98,9 @@ class App extends Component {
 	}
 
 	onCardClick(card) {
-		if (!this.state.canSelect || card === this.state.selected.firstCard) return
+		if (!this.state.canSelect ||
+			card === this.state.selected.firstCard ||
+			!card.enabled) return
 
 		let delayCheck = () => {
 			let { firstCard, secondCard } = this.state.selected
@@ -145,7 +149,7 @@ class App extends Component {
 
 				<div className="board">
 					{this.state.board.map((card, index) => 
-						<Card key={index} data={card} onClick={e => this.onCardClick(card)} />
+						<Card key={index} data={card} onClick={() => this.onCardClick(card)} />
 					)}
 				</div>
 
@@ -153,7 +157,7 @@ class App extends Component {
 					<div className="endgame-box">
 						<p>{this.state.endMessage}</p>
 						<button onClick={() => this.restartGame()}>
-							Juegar de nuevo
+							Jugar de nuevo
 						</button>
 					</div>
 				}

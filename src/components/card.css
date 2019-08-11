@@ -19,5 +19,6 @@
     }
 
     .card-disabled {
-        visibility: hidden;
+        cursor: default;
+        opacity: .5;
     }
