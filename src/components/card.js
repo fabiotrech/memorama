@@ -2,10 +2,14 @@ import React from 'react';
 import './card.css'
 
 function Card(props) {
-    let { value, show }  = props.data;
+    let { value, show, visible }  = props.data;
+    let css = ["card"]
 
+    if (show) css = [...css, "card-show"]
+    if (!visible) css = [...css, "card-disabled"]
+    
     return (
-        <div className={ show ? "card" : "card card-hidden" } onClick={() => props.onClick()}>
+        <div className={ css.join(" ") } onClick={() => props.onClick()}>
             {value}
         </div>
     )

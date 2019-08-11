@@ -11,7 +11,8 @@ class App extends Component {
 		},
 		currentPlayer: 0,
 		canSelect: true,
-		board: []
+		board: [],
+		endMessage: null
 	}
 
 	componentDidMount() {
@@ -25,7 +26,7 @@ class App extends Component {
 		let split = letters.split("")
 
 		return this.shuffleArray(split).map(s => {
-			return { value: s, show: false, visible: false}
+			return { value: s, show: false, visible: true}
 		})
 	}
 
@@ -74,19 +75,34 @@ class App extends Component {
 
 				return card
 			})
-		})
+		}, () => this.checkEndGame())
+	}
+
+	checkEndGame() {
+		let hasCards = this.state.board.filter(card => card.visible).length
+
+		if (hasCards === 0) {
+			let score1 = this.state.scores[0]
+			let score2 = this.state.scores[1]
+			let message = "¡Empate!"
+
+			if (score1 > score2) message = "Jugador 1 gana!";
+			if (score2 > score1) message = "Jugador 2 gana!";
+
+			this.setState({
+				endMessage: message
+			})
+		}
 	}
 
 	onCardClick(card) {
-		if (!this.state.canSelect) return
+		if (!this.state.canSelect || card === this.state.selected.firstCard) return
 
 		let delayCheck = () => {
 			let { firstCard, secondCard } = this.state.selected
 			if (!firstCard || !secondCard) return
 
-			setTimeout(() => {
-				this.checkPoint()
-			}, 1500);
+			setTimeout(() => this.checkPoint(), 1500);
 		}
 
 		this.setState(state => {
@@ -108,19 +124,39 @@ class App extends Component {
 		}, () => delayCheck())
 	}
 
+	restartGame() {
+		this.setState({
+			scores: [0, 0],
+			currentPlayer: 0,
+			endMessage: null,
+			board: this.getRandomBoard()
+		})
+	}
+
 	render() {
 		return (
 			<div>
 				<h1>Memorama</h1>
 				<p>
-					Scores: Player 1 ({this.state.scores[0]}) - Player 2 ({this.state.scores[1]})
+					Puntos: Jugador 1 ({this.state.scores[0]}) - Jugador 2 ({this.state.scores[1]})
 				</p>
 
-				<p>Curent player: Player {this.state.currentPlayer + 1}</p>
+				<p>Turno del jugador {this.state.currentPlayer + 1}</p>
 
-				{this.state.board.map((card, index) => 
-					<Card key={index} data={card} onClick={e => this.onCardClick(card)} />
-				)}
+				<div className="board">
+					{this.state.board.map((card, index) => 
+						<Card key={index} data={card} onClick={e => this.onCardClick(card)} />
+					)}
+				</div>
+
+				{this.state.endMessage && 
+					<div className="endgame-box">
+						<p>{this.state.endMessage}</p>
+						<button onClick={() => this.restartGame()}>
+							Juegar de nuevo
+						</button>
+					</div>
+				}
 			</div>
 		)
 	}

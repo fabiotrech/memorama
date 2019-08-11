@@ -1,6 +1,7 @@
 .card {
     border: 1px solid #ccc;
     background-color: #efefef;
+    cursor: pointer;
     font-size: 40px;
     height: 100px;
     width: 60px;
@@ -8,13 +9,15 @@
     text-transform: uppercase;
     text-align: center;
     overflow: hidden;
+    text-indent: -9999px;
     border-radius: 4px;
+    user-select: none;
 }
 
-    .card-selected {
-        color: red;
+    .card-show {
+        text-indent: 0;
     }
 
-    .card-hidden {
-        text-indent: -9999px;
+    .card-disabled {
+        visibility: hidden;
     }
