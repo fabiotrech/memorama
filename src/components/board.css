@@ -1,0 +1,8 @@
+.board {
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(var(--board-columns), 1fr);
+  font-family: "Beth Ellen", cursive;
+  margin: 0 auto;
+  width: min-content;
+}

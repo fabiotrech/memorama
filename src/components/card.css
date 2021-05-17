@@ -1,24 +1,45 @@
 .card {
-    background-color: #efefef;
-    cursor: pointer;
-    font-size: 40px;
-    height: 100px;
-    width: 60px;
-    line-height: 100px;
-    text-transform: uppercase;
-    text-align: center;
-    overflow: hidden;
-    text-indent: -9999px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, .3);
-    border-radius: 4px;
-    user-select: none;
+  color: #000;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font: inherit;
+  position: relative;
+  height: 174px;
+  width: 115px;
+  transform-style: preserve-3d;
+  transition: transform 1s ease-in-out;
+  user-select: none;
 }
 
-    .card-show {
-        text-indent: 0;
-    }
+.front,
+.back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+}
 
-    .card-disabled {
-        cursor: default;
-        opacity: .5;
-    }
+.front {
+  display: grid;
+  background-color: #fff;
+  align-content: center;
+  justify-content: center;
+  font-size: 40px;
+  text-transform: uppercase;
+  transform: rotateY(180deg);
+}
+
+.back {
+  transform: rotateY(0);
+}
+
+.flip {
+  transform: rotateY(180deg);
+}

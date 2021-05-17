@@ -1,7 +1,24 @@
-import React, { Component } from 'react';
-import Card from './components/card';
-import './App.css';
+import React from "react";
+import { Board } from "./components/board";
+import { Score } from "./components/score";
+import { StoreProvider } from "./hooks/store";
+import "./App.css";
 
+export default function App() {
+  function PlayerTurn() {
+    return <p className="player-turn">Turno del jugador 1</p>;
+  }
+
+  return (
+    <StoreProvider>
+      <Score score1="0" score2="1" />
+      <PlayerTurn />
+      <Board />
+    </StoreProvider>
+  );
+}
+
+/*
 class App extends Component {
 	state = {
 		scores: [0, 0],
@@ -173,3 +190,4 @@ class App extends Component {
 }
 
 export default App;
+*/
