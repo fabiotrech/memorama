@@ -1,3 +1,7 @@
+import { checkMatch } from "../actions/check-match"
+import { flipCard } from "../actions/flip-card"
+import { newBoard } from "../actions/new-board"
+
 export const initialState = {
   board: {
     columns: 4,
@@ -9,54 +13,18 @@ export const initialState = {
 export const types = {
   NEW_BOARD: "new-board",
   FLIP_CARD: "flip-card",
+  CHECK_MATCH: "check-match",
 };
 
 export function AppReducer(state, action) {
   switch (action.type) {
     case types.NEW_BOARD:
-      const {
-        board: { rows, columns },
-      } = state;
-
-      const letters = "abcdefghij".split("");
-      let cards = new Array(rows * columns);
-
-      for (let index = 0; index < cards.length; index += 2) {
-        const letterIndex = randomInteger(0, letters.length - 1);
-        const value = letters[letterIndex];
-
-        cards[index] = {
-          id: `card${index}`,
-          value,
-        };
-
-        cards[index + 1] = {
-          id: `card${index + 1}`,
-          value,
-        };
-
-        letters.splice(letterIndex, 1);
-      }
-
-      cards = cards.sort(() => Math.random() - 0.5);
-
-      const newBoard = { ...state.board, cards };
-      return { ...state, board: newBoard };
+      return newBoard(state)
     case types.FLIP_CARD:
-      const newCards = state.board.cards.map((card) => {
-        if (card.id === action.id) {
-          card.flip = !card.flip;
-          card.disabled = true;
-        }
-
-        return card;
-      });
-
-      return { ...state, cards: newCards };
+      return flipCard(state, action)
+    case types.CHECK_MATCH:
+      return checkMatch(state)
     default:
       return state;
   }
 }
-
-const randomInteger = (min, max) =>
-  Math.floor(Math.random() * (max - min + 1)) + min;
